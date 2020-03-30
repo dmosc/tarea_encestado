@@ -21,16 +21,22 @@ public class Ball extends Item {
     private int y0;
     private double xVelocity;
     private double yVelocity;
-    private final double gravity;
+    private int points;
+    private int lives;
+    private int consecutiveMisses;
+    private int consecutivePoints;
     private Game game;
 
     public Ball(int x, int y, int width, int height, Game game) {
         super(x, y, width, height);
-        
+
+        this.points = 0;
+        this.lives = 5;
+        this.consecutiveMisses = 0;
+        this.consecutivePoints = 0;
         seconds = new Date().getTime() - time0.getTime() / 1000.0;
         this.xVelocity = 0;
         this.yVelocity = 0;
-        this.gravity = 9.81;
         this.game = game;
     }
 
@@ -74,6 +80,38 @@ public class Ball extends Item {
         this.seconds = seconds;
     }
 
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+
+    public int getConsecutiveMisses() {
+        return consecutiveMisses;
+    }
+
+    public void setConsecutiveMisses(int consecutiveMisses) {
+        this.consecutiveMisses = consecutiveMisses;
+    }
+
+    public int getConsecutivePoints() {
+        return consecutivePoints;
+    }
+
+    public void setConsecutivePoints(int consecutivePoints) {
+        this.consecutivePoints = consecutivePoints;
+    }
+
     private boolean isMouseInsideBall () {
         return 
             game.getMouseManager().getX() >= getX() - 50 && game.getMouseManager().getX() <= getX() + getWidth() + 50 &&
@@ -94,6 +132,16 @@ public class Ball extends Item {
         if ( isMouseInsideBall() ) {
             setX(game.getMouseManager().getX() - 25);
             setY(game.getMouseManager().getY() - 25);
+        }
+
+        if ( consecutiveMisses == 3 ) {
+            setConsecutiveMisses( 0 );
+            setLives( getLives() - 1 );
+        }
+
+        if ( consecutivePoints == 50 ) {
+            setConsecutivePoints( 0 );
+            setLives( getLives() + 1 );
         }
     }
 

@@ -5,7 +5,7 @@
  */
 package main;
 
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.BufferStrategy;
 
 /**
@@ -133,8 +133,6 @@ public final class Game implements Runnable {
         }
         
         if ( ballFlying && ball.getX() <= getWidth() - 50 && ball.getY() <= getHeight() - 50 ) {
-//            System.out.println( "X: " + ball.getX0() + (int) ball.getxVelocity() * ball.getSeconds() );
-//            System.out.println( "Y: " + (int) (ball.getY0() + ball.getyVelocity() * ball.getSeconds() + 9.81 * Math.pow(ball.getSeconds(), 2) / 2) );
             ball.setX((int) (ball.getX0() + (int) ball.getxVelocity() * ball.getSeconds() ));
             ball.setY((int) (ball.getY0() + ball.getyVelocity() * ball.getSeconds() + 9.81 * Math.pow(ball.getSeconds(), 2) / 2));
         } else {
@@ -154,10 +152,18 @@ public final class Game implements Runnable {
         if (bs == null) {
             display.getCanvas().createBufferStrategy(3);
         } else {
-            g = bs.getDrawGraphics();
-            g.drawImage(Assets.background, 0, 0, width, height, null);
-            throwZone.render(g);
-            ball.render(g);
+            if ( ball.getLives() > 0 ) {
+                g = bs.getDrawGraphics();
+                g.drawImage(Assets.background, 0, 0, width, height, null);
+                throwZone.render(g);
+                ball.render(g);
+
+                g.setColor(Color.YELLOW);
+                g.drawString("VIDAS: " + ball.getLives(), 400, getHeight() - 20);
+                g.drawString("PUNTOS: " + ball.getPoints(), 600, getHeight() - 20);
+            } else {
+                // Finish game logic
+            }
 
             bs.show();
             g.dispose();
