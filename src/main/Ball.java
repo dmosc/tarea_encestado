@@ -16,7 +16,7 @@ public class Ball extends Item {
 
     private final static Date time0 = new Date();
     private final static int angle = 45;
-    private int seconds;
+    private double seconds;
     private int x0;
     private int y0;
     private double xVelocity;
@@ -27,7 +27,7 @@ public class Ball extends Item {
     public Ball(int x, int y, int width, int height, Game game) {
         super(x, y, width, height);
         
-        seconds = (int) ((new Date().getTime() - time0.getTime()) / 1000);
+        seconds = new Date().getTime() - time0.getTime() / 1000.0;
         this.xVelocity = 0;
         this.yVelocity = 0;
         this.gravity = 9.81;
@@ -66,11 +66,11 @@ public class Ball extends Item {
         this.y0 = y0;
     }
 
-    public int getSeconds() {
+    public double getSeconds() {
         return seconds;
     }
 
-    public void setSeconds(int seconds) {
+    public void setSeconds(double seconds) {
         this.seconds = seconds;
     }
 
@@ -81,15 +81,15 @@ public class Ball extends Item {
     }
     
     public void throwBall () {
-        setX(getX0() + (int) getxVelocity() * seconds);
-        setY( getY0() + 5 );
+        setX((int) (getX0() + (int) getxVelocity() * seconds));
+        setY((getY0() + 5));
         
         System.out.println(getY() + 5);
     }
     
     @Override
     public void tick() {
-        setSeconds( (int) ((new Date().getTime() - time0.getTime()) / 1000) );
+        setSeconds( (new Date().getTime() - time0.getTime()) / 1000.0 );
         System.out.println( seconds );
         if ( isMouseInsideBall() ) {
             setX(game.getMouseManager().getX() - 25);

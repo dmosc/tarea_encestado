@@ -135,7 +135,7 @@ public final class Game implements Runnable {
         if ( ballFlying && ball.getX() <= getWidth() - 50 && ball.getY() <= getHeight() - 50 ) {
 //            System.out.println( "X: " + ball.getX0() + (int) ball.getxVelocity() * ball.getSeconds() );
 //            System.out.println( "Y: " + (int) (ball.getY0() + ball.getyVelocity() * ball.getSeconds() + 9.81 * Math.pow(ball.getSeconds(), 2) / 2) );
-            ball.setX( ball.getX0() + (int) ball.getxVelocity() * ball.getSeconds() );
+            ball.setX((int) (ball.getX0() + (int) ball.getxVelocity() * ball.getSeconds() ));
             ball.setY((int) (ball.getY0() + ball.getyVelocity() * ball.getSeconds() + 9.81 * Math.pow(ball.getSeconds(), 2) / 2));
         } else {
             ballFlying = false;
