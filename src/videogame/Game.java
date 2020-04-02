@@ -23,6 +23,7 @@ public final class Game implements Runnable {
     private KeyManager keyManager;      // to manage the keyboard
     private MouseManager mouseManager;  // to manage the mouse
     private Ball ball;                  // to use a ball
+    private Hole hole;                  // to use a hole
     private ThrowZone throwZone;        // to use the throwZone
 
     /**
@@ -37,6 +38,7 @@ public final class Game implements Runnable {
         mouseManager = new MouseManager();
         throwZone = new ThrowZone(0, 0, 200, getHeight(), this);
         ball = new Ball(getWidth() / 2 + 50, getHeight() / 2, 50, 50, this);
+        hole = new Hole(700, 360, 80, 100);
     }
 
     /**
@@ -108,6 +110,7 @@ public final class Game implements Runnable {
     private void tick() {
         keyManager.tick();
         ball.tick();
+        hole.tick();
 
         if (ball.collision(throwZone) && !mouseManager.isLeft()) {
 
@@ -143,6 +146,14 @@ public final class Game implements Runnable {
             Assets.miss.play();
             ball.setConsecutiveMisses(ball.getConsecutiveMisses() + 1);
         }
+
+        if(ball.collision(hole)){
+            ball.setX(getWidth() / 2 + 50);
+            ball.setY(getHeight() / 2);
+            ball.setFlying(false);
+            Assets.enter.play();
+            ball.setPoints(ball.getPoints() + 10);
+        }
     }
 
     private void render() {
@@ -162,6 +173,7 @@ public final class Game implements Runnable {
                 g.drawImage(Assets.background, 0, 0, width, height, null);
                 throwZone.render(g);
                 ball.render(g);
+                hole.render(g);
 
                 g.setColor(Color.YELLOW);
                 g.setColor(Color.YELLOW);

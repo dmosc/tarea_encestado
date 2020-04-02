@@ -29,9 +29,19 @@ public class Assets {
     public static BufferedImage ball;
 
     /**
+     * to store the player image
+     */
+    public static BufferedImage hole;
+
+    /**
      * to store the fail sound
      */
     public static SoundClip miss;
+
+    /**
+     * to store the fail sound
+     */
+    public static SoundClip enter;
 
     /**
      * Loading the images and sound clips for the global game
@@ -40,7 +50,9 @@ public class Assets {
         background = ImageLoader.loadImage("/images/background.jpg");
         throwZone = ImageLoader.loadImage("/images/throw_zone.png");
         ball = ImageLoader.loadImage("/images/ball.png");
+        hole = ImageLoader.loadImage("/images/hole.png");
         miss = new SoundClip("/sounds/miss.wav");
+        enter = new SoundClip("/sounds/zas.wav");
     }
 
 }
